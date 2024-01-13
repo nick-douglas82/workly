@@ -14,6 +14,42 @@ const Tasks = async () => {
     },
   })
 
+  // for (let i = 0; i < 10; i++) {
+  //   await db.task.create({
+  //     data: {
+  //       title: `Task ${i}`,
+  //       description: `Task ${i} description`,
+  //       order: i,
+  //       listId: 'e35fbe77-8a94-431a-9b90-ce8c176b23bc',
+  //     },
+  //   })
+  // }
+
+  // await db.list.create({
+  //   data: {
+  //     title: 'To Do',
+  //     order: 0,
+  //   },
+  // })
+  // await db.list.create({
+  //   data: {
+  //     title: 'In Progress',
+  //     order: 1,
+  //   },
+  // })
+  // await db.list.create({
+  //   data: {
+  //     title: 'In Review',
+  //     order: 2,
+  //   },
+  // })
+  // await db.list.create({
+  //   data: {
+  //     title: 'Completed',
+  //     order: 3,
+  //   },
+  // })
+
   return (
     <>
       <PageHeaderBar

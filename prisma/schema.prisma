@@ -6,9 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model List {
@@ -26,7 +26,7 @@ model Task {
   description   String? @db.Text
   order         Int
   listId        String
-  list          List  @relation(fields: [listId], references: [id], onDelete: Cascade)
+  list          List  @relation(fields: [listId], references: [id])
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
