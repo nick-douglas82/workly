@@ -15,8 +15,6 @@ export const ColumnList: React.FC<ColumnListProp> = ({ tasks, columnId }) => {
 
   useEffect(() => {
     const reorderedTasks = tasks.sort((a, b) => a.order - b.order)
-
-    console.log(reorderedTasks)
     setOrderedTasks(reorderedTasks)
   }, [tasks])
   return (

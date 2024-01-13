@@ -5,6 +5,7 @@ export const UpdateTaskOrder = z.object({
     z.object({
       id: z.string(),
       title: z.string(),
+      description: z.string().nullable(),
       order: z.number(),
       listId: z.string(),
       createdAt: z.date(),

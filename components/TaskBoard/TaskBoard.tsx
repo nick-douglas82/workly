@@ -25,7 +25,6 @@ export const TaskBoard: React.FC<TaskBoardProp> = ({ data }) => {
 
   const { execute: executeUpdateTaskOrder } = useAction(updateTaskOrder, {
     onSuccess: () => {
-      console.log('success!')
       toast.success('Card reordered')
     },
     onError: (error) => {
@@ -108,7 +107,9 @@ export const TaskBoard: React.FC<TaskBoardProp> = ({ data }) => {
         })
 
         setOrderedData(newOrderedData)
-        // TODO: Update the order of the tasks in the database
+        executeUpdateTaskOrder({
+          items: destList.tasks,
+        })
       }
     }
   }

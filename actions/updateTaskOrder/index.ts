@@ -6,7 +6,7 @@ import { db } from '@/lib/db'
 import { createSafeAction } from '@/lib/createSafeAction'
 import { InputType, ReturnType } from './types'
 
-const handler = async (data: any): Promise<ReturnType> => {
+const handler = async (data: InputType): Promise<ReturnType> => {
   const { items } = data
   let updatedCards
 
