@@ -1,14 +1,21 @@
+'use client'
+
+import { Task } from '@prisma/client'
 import { ColumnHeader, ColumnList } from '@/components/TaskBoard'
 
 interface ColumnProp {
   title: string
+  columnId: string
+  tasks: Task[]
 }
 
-export const Column: React.FC<ColumnProp> = ({ title }) => {
+export const Column: React.FC<ColumnProp> = ({ title, tasks, columnId }) => {
   return (
-    <div className="rounded-lg bg-gray-100 px-5 py-6">
-      <ColumnHeader title={title} />
-      <ColumnList />
+    <div>
+      <div className="rounded-lg bg-gray-100 px-5 py-6">
+        <ColumnHeader title={title} count={tasks.length ? tasks.length : 0} />
+        <ColumnList tasks={tasks} columnId={columnId} />
+      </div>
     </div>
   )
 }
