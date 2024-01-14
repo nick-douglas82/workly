@@ -1,6 +1,6 @@
 'use server'
 
-import { Task } from '@prisma/client'
+import type { Task } from '@prisma/client'
 import { UpdateTaskOrder } from '@/actions/updateTaskOrder/schema'
 import { db } from '@/lib/db'
 import { createSafeAction } from '@/lib/createSafeAction'

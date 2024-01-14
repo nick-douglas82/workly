@@ -2,7 +2,7 @@
 
 import { Droppable } from '@hello-pangea/dnd'
 import { Card } from '@/components/TaskBoard'
-import { Task } from '@prisma/client'
+import type { Task } from '@prisma/client'
 import { useEffect, useState } from 'react'
 
 interface ColumnListProp {
