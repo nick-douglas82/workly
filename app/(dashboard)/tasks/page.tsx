@@ -14,6 +14,11 @@ const Tasks = async () => {
     },
   })
 
+  // console.log(
+  //   'taskBoardData',
+  //   taskBoardData[0].tasks.sort((a, b) => a.order - b.order)
+  // )
+
   // for (let i = 0; i < 10; i++) {
   //   await db.task.create({
   //     data: {

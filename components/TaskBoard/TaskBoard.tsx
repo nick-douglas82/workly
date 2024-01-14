@@ -129,7 +129,7 @@ export const TaskBoard: React.FC<TaskBoardProp> = ({ data }) => {
                     key={column.id}
                     columnId={column.id}
                     title={column.title}
-                    tasks={column.tasks}
+                    tasks={column.tasks.sort((a, b) => a.order - b.order)}
                   />
                 ))
               : null}

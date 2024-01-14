@@ -5,6 +5,7 @@ import { UpdateTaskOrder } from '@/actions/updateTaskOrder/schema'
 import { db } from '@/lib/db'
 import { createSafeAction } from '@/lib/createSafeAction'
 import { InputType, ReturnType } from './types'
+import { revalidatePath } from 'next/cache'
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { items } = data
@@ -30,6 +31,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     }
   }
 
+  revalidatePath(`/tasks`)
   return { data: updatedCards }
 }
 

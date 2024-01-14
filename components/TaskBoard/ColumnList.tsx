@@ -3,7 +3,6 @@
 import { Droppable } from '@hello-pangea/dnd'
 import { Card } from '@/components/TaskBoard'
 import type { Task } from '@prisma/client'
-import { useEffect, useState } from 'react'
 
 interface ColumnListProp {
   tasks: Task[]
@@ -11,12 +10,6 @@ interface ColumnListProp {
 }
 
 export const ColumnList: React.FC<ColumnListProp> = ({ tasks, columnId }) => {
-  const [orderedTasks, setOrderedTasks] = useState(tasks)
-
-  useEffect(() => {
-    const reorderedTasks = tasks.sort((a, b) => a.order - b.order)
-    setOrderedTasks(reorderedTasks)
-  }, [tasks])
   return (
     <Droppable droppableId={columnId} type="card">
       {(provided) => (
@@ -26,7 +19,7 @@ export const ColumnList: React.FC<ColumnListProp> = ({ tasks, columnId }) => {
           {...provided.droppableProps}
         >
           {tasks
-            ? orderedTasks.map((task, index) => (
+            ? tasks.map((task, index) => (
                 <Card key={task.id} task={task} index={index} />
               ))
             : null}
