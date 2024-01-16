@@ -5,6 +5,7 @@ type Props = {
     name: string
     href: string
     icon: React.ReactNode
+    active?: boolean
   }[]
   hasDivider?: boolean
 }
@@ -19,6 +20,7 @@ export const SideNavList: React.FC<Props> = ({ list, hasDivider }) => {
               name: item.name,
               href: item.href,
               icon: item.icon,
+              active: item.active,
             }}
             key={index}
           />

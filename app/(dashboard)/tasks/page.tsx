@@ -1,8 +1,7 @@
-import { Button } from '@/components/Button/Button'
-import { FiPlus } from 'react-icons/fi'
 import { PageHeaderBar } from '@/components/Page/PageHeaderBar'
 import { TaskBoard } from '@/components/TaskBoard'
 import { db } from '@/lib/db'
+import { CreateTask } from '@/components/CreateTask/CreateTask'
 
 const Tasks = async () => {
   const taskBoardData = await db.list.findMany({
@@ -57,12 +56,7 @@ const Tasks = async () => {
 
   return (
     <>
-      <PageHeaderBar
-        title="Team Tasks"
-        action={
-          <Button icon={<FiPlus className="h-6 w-6" />} text="Create Task" />
-        }
-      />
+      <PageHeaderBar title="Team Tasks" action={<CreateTask />} />
       <TaskBoard data={taskBoardData} />
     </>
   )
