@@ -131,7 +131,7 @@ export const TaskBoard: React.FC<TaskBoardProp> = ({ data }) => {
               ? orderedData.map((column) => (
                   <Column
                     key={column.id}
-                    columnId={column.id}
+                    column={column}
                     title={column.title}
                     tasks={column.tasks.sort((a, b) => a.order - b.order)}
                   />

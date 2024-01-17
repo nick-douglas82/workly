@@ -28,7 +28,7 @@ export const SiteModal: React.FC<SiteModalProp> = ({
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-60"
             onClick={onClose}
           />
-          <div className="fixed inset-1/2 z-[101] min-h-64 w-96 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white px-3 pt-8 text-base font-normal">
+          <div className="fixed inset-1/2 z-[101] h-fit min-h-64 w-96 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white px-3 pb-6 pt-12 text-base font-normal">
             <button
               type="button"
               className="absolute right-1 top-1"

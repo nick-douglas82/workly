@@ -79,7 +79,11 @@ export const CreateTask = forwardRef<HTMLTextAreaElement, CreateTaskProp>(
         )}
 
         <SiteModal isActive={isActive} onClose={() => setIsActive(false)}>
-          <form ref={formRef} onSubmit={onSubmit}>
+          <form
+            ref={formRef}
+            onSubmit={onSubmit}
+            className="flex flex-col space-y-6"
+          >
             <FormTextarea
               id="title"
               onKeyDown={onTextareakeyDown}

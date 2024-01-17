@@ -2,14 +2,16 @@
 
 import { Draggable } from '@hello-pangea/dnd'
 import { Task } from '@prisma/client'
-import { BiDotsHorizontalRounded } from 'react-icons/bi'
+import { TaskContextMenu } from '@/components/TaskBoard/TaskContextMenu'
+import { ListWithTasks } from '@/types'
 
 interface CardProp {
   task: Task
   index: number
+  column: ListWithTasks
 }
 
-export const Card: React.FC<CardProp> = ({ task, index }) => {
+export const Card: React.FC<CardProp> = ({ task, index, column }) => {
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided) => (
@@ -21,7 +23,7 @@ export const Card: React.FC<CardProp> = ({ task, index }) => {
         >
           <div className="flex items-center justify-between text-lg font-medium">
             <span>{task.title}</span>
-            <BiDotsHorizontalRounded className="h-6 w-6" />
+            <TaskContextMenu task={task} column={column} />
           </div>
           {task.description ? (
             <p className="mt-1 text-sm text-gray-400">{task.description}</p>

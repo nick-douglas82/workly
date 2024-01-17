@@ -3,24 +3,26 @@
 import { Droppable } from '@hello-pangea/dnd'
 import { Card } from '@/components/TaskBoard'
 import type { Task } from '@prisma/client'
+import { ListWithTasks } from '@/types'
+import { cn } from '@/lib/utils'
 
 interface ColumnListProp {
   tasks: Task[]
-  columnId: string
+  column: ListWithTasks
 }
 
-export const ColumnList: React.FC<ColumnListProp> = ({ tasks, columnId }) => {
+export const ColumnList: React.FC<ColumnListProp> = ({ tasks, column }) => {
   return (
-    <Droppable droppableId={columnId} type="card">
+    <Droppable droppableId={column.id} type="card">
       {(provided) => (
         <div
-          className="mt-6 flex flex-col gap-y-4"
+          className={cn(`flex flex-col gap-y-4`, tasks.length > 0 && 'mt-6')}
           ref={provided.innerRef}
           {...provided.droppableProps}
         >
           {tasks
             ? tasks.map((task, index) => (
-                <Card key={task.id} task={task} index={index} />
+                <Card key={task.id} task={task} column={column} index={index} />
               ))
             : null}
           {provided.placeholder}

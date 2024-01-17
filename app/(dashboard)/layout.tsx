@@ -11,7 +11,7 @@ export default function DashboardLayout({
       <Toaster />
       <main className="flex h-full">
         <SideNav />
-        <div className="w-full xl:pl-72">
+        <div className="w-full pl-72">
           <div className="px-6 py-4">{children}</div>
         </div>
       </main>
