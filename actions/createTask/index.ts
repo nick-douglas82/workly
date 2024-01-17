@@ -9,7 +9,7 @@ import { CreateTask } from './schema'
 import { InputType, ReturnType } from './types'
 
 const handler = async (data: InputType): Promise<ReturnType> => {
-  const { title, listId } = data
+  const { title, description, listId } = data
   let task
   let list_id = listId as string
 
@@ -52,6 +52,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     task = await db.task.create({
       data: {
         title,
+        description,
         listId: list_id,
         order: newOrder,
       },

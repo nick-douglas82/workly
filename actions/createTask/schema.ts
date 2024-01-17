@@ -9,5 +9,6 @@ export const CreateTask = z.object({
     .min(3, {
       message: 'Title is too short',
     }),
+  description: z.string().nullable(),
   listId: z.string().nullable(),
 })

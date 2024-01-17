@@ -41,8 +41,9 @@ export const CreateTask = forwardRef<HTMLTextAreaElement, CreateTaskProp>(
       event.preventDefault()
       const formData = new FormData(event.currentTarget)
       const title = String(formData.get('title'))
+      const description = String(formData.get('description'))
 
-      execute({ title, listId: columnId || null })
+      execute({ title, description, listId: columnId || null })
     }
 
     const onTextareakeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (
@@ -84,6 +85,13 @@ export const CreateTask = forwardRef<HTMLTextAreaElement, CreateTaskProp>(
               onKeyDown={onTextareakeyDown}
               ref={ref}
               placeholder="Enter a title for this card..."
+              errors={fieldErrors}
+            />
+            <FormTextarea
+              id="description"
+              onKeyDown={onTextareakeyDown}
+              ref={ref}
+              placeholder="Enter a description..."
               errors={fieldErrors}
             />
             <Button

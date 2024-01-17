@@ -12,10 +12,12 @@ export const ColumnHeader: React.FC<ColumnHeaderProps> = ({
   columnId,
 }) => {
   return (
-    <div className="flex items-center justify-between text-xl font-semibold">
-      <span>
+    <div className="flex items-center justify-between text-lg font-semibold text-neutral-500">
+      <span className="flex items-center">
         {title}
-        <span className="ml-1 text-neutral-300">{count}</span>
+        <span className="ml-3 flex aspect-square h-6 w-6 items-center justify-center rounded-md bg-gray-200 p-1 text-sm text-neutral-800">
+          {count}
+        </span>
       </span>
       <CreateTask isSmall columnId={columnId} />
     </div>
