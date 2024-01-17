@@ -1,7 +1,7 @@
 'use client'
 
 import { toast } from 'sonner'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd'
 import { Column } from '@/components/TaskBoard'
 import { ListWithTasks } from '@/types'
@@ -22,6 +22,10 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
 
 export const TaskBoard: React.FC<TaskBoardProp> = ({ data }) => {
   const [orderedData, setOrderedData] = useState(data)
+
+  useEffect(() => {
+    setOrderedData(data)
+  }, [data])
 
   const { execute: executeUpdateTaskOrder } = useAction(updateTaskOrder, {
     onSuccess: () => {

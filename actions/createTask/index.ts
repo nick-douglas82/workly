@@ -1,28 +1,37 @@
 'use server'
 
-import { CreateTask } from '@/actions/createTask/schema'
-import { InputType, ReturnType } from '@/actions/createTask/types'
-import { createSafeAction } from '@/lib/createSafeAction'
-import { Task } from '@prisma/client'
-import { db } from '@/lib/db'
 import { revalidatePath } from 'next/cache'
+
+import { db } from '@/lib/db'
+import { createSafeAction } from '@/lib/createSafeAction'
+
+import { CreateTask } from './schema'
+import { InputType, ReturnType } from './types'
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { title, listId } = data
+  let task
+  let list_id = listId as string
 
-  let task: Task
-  let list_id: string
+  if (!listId) {
+    const firstList = await db.list.findFirst({
+      orderBy: { order: 'asc' },
+      select: { id: true },
+    })
 
-  if (!title) {
-    return {
-      error: 'Title is required',
+    if (!firstList) {
+      return {
+        error: 'List not found',
+      }
     }
+
+    list_id = firstList?.id
   }
 
   try {
     const list = await db.list.findUnique({
       where: {
-        id: listId || undefined,
+        id: list_id,
       },
     })
 
@@ -31,30 +40,29 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         error: 'List not found',
       }
     }
-    list_id = list.id
 
-    const lastTask = await db.task.findFirst({
-      where: { listId: listId || list_id },
+    const lastCard = await db.task.findFirst({
+      where: { listId: list_id },
       orderBy: { order: 'desc' },
       select: { order: true },
     })
 
-    const newOrder = lastTask ? lastTask.order + 1 : 1
+    const newOrder = lastCard ? lastCard.order + 1 : 1
 
     task = await db.task.create({
       data: {
         title,
-        listId: listId || list.id,
+        listId: list_id,
         order: newOrder,
       },
     })
   } catch (error) {
     return {
-      error: `Failed to create. ${error}`,
+      error: 'Failed to create.',
     }
   }
 
-  revalidatePath(`/tasks`)
+  revalidatePath(`/tasks`, 'page')
   return { data: task }
 }
 
