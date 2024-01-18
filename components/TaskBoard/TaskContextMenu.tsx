@@ -1,6 +1,7 @@
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { IoTrashOutline } from 'react-icons/io5'
 import { TbArrowMoveRight, TbArrowMoveLeft } from 'react-icons/tb'
+import { CiEdit } from 'react-icons/ci'
 
 import {
   ContextMenu,
@@ -15,6 +16,16 @@ import { deleteTask } from '@/actions/deleteTask'
 import { moveToNextStage } from '@/actions/moveTaskToNextStage'
 import { Task } from '@prisma/client'
 import { ListWithTasks } from '@/types'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/Dialog'
+
+import { UpdateTask } from '@/components/UpdateTask/UpdateTask'
+import { useState } from 'react'
 
 interface TaskContextMenuProp {
   task: Task
@@ -25,6 +36,7 @@ export const TaskContextMenu: React.FC<TaskContextMenuProp> = ({
   task,
   column,
 }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const isLastColumn = column.order === 3
   const isFirstColumn = column.order === 0
 
@@ -57,46 +69,65 @@ export const TaskContextMenu: React.FC<TaskContextMenuProp> = ({
   }
 
   return (
-    <ContextMenu>
-      <ContextMenuTrigger>
-        <button className="flex h-6 w-6 items-center justify-center rounded-full hover:bg-gray-200 hover:text-teal-700">
-          <BiDotsHorizontalRounded className="h-6 w-6" />
-        </button>
-      </ContextMenuTrigger>
-      <ContextMenuContent>
-        {!isFirstColumn ? (
-          <>
+    <Dialog open={isDialogOpen}>
+      <ContextMenu>
+        <ContextMenuTrigger>
+          <button className="flex h-6 w-6 items-center justify-center rounded-full hover:bg-gray-200 hover:text-teal-700">
+            <BiDotsHorizontalRounded className="h-6 w-6" />
+          </button>
+        </ContextMenuTrigger>
+        <ContextMenuContent>
+          <DialogTrigger asChild>
             <ContextMenuItem
               className="flex cursor-pointer items-center font-medium"
-              onClick={() => handleMoveStage('previous')}
+              onClick={() => setIsDialogOpen(true)}
             >
-              <TbArrowMoveLeft className="mr-1 h-4 w-4" />
-              Demote Task
+              <CiEdit className="mr-1 h-4 w-4" />
+              Edit Task
             </ContextMenuItem>
+          </DialogTrigger>
+          <ContextMenuSeparator />
+          {!isFirstColumn ? (
+            <>
+              <ContextMenuItem
+                className="flex cursor-pointer items-center font-medium"
+                onClick={() => handleMoveStage('previous')}
+              >
+                <TbArrowMoveLeft className="mr-1 h-4 w-4" />
+                Demote Task
+              </ContextMenuItem>
+            </>
+          ) : null}
+          {!isLastColumn ? (
+            <>
+              <ContextMenuItem
+                className="flex cursor-pointer items-center font-medium"
+                onClick={() => handleMoveStage('next')}
+              >
+                <TbArrowMoveRight className="mr-1 h-4 w-4" />
+                Promote Task
+              </ContextMenuItem>
+              <ContextMenuSeparator />
+            </>
+          ) : (
             <ContextMenuSeparator />
-          </>
-        ) : null}
-        {!isLastColumn ? (
-          <>
-            <ContextMenuItem
-              className="flex cursor-pointer items-center font-medium"
-              onClick={() => handleMoveStage('next')}
-            >
-              <TbArrowMoveRight className="mr-1 h-4 w-4" />
-              Promote Task
-            </ContextMenuItem>
-            <ContextMenuSeparator />
-          </>
-        ) : null}
-        <ContextMenuItem
-          className="flex cursor-pointer items-center font-medium hover:!text-red-600"
-          onClick={handleTaskDelete}
-          disabled={isLoadingDelete}
-        >
-          <IoTrashOutline className="mr-1 h-4 w-4" />
-          Delete Task
-        </ContextMenuItem>
-      </ContextMenuContent>
-    </ContextMenu>
+          )}
+          <ContextMenuItem
+            className="flex cursor-pointer items-center font-medium hover:!text-red-600"
+            onClick={handleTaskDelete}
+            disabled={isLoadingDelete}
+          >
+            <IoTrashOutline className="mr-1 h-4 w-4" />
+            Delete Task
+          </ContextMenuItem>
+        </ContextMenuContent>
+      </ContextMenu>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit Task</DialogTitle>
+          <UpdateTask task={task} setIsDialogOpen={setIsDialogOpen} />
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   )
 }

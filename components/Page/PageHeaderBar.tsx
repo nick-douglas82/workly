@@ -5,10 +5,10 @@ type Props = {
 
 export const PageHeaderBar: React.FC<Props> = ({ title, action }) => {
   return (
-    <header className="mb-8 flex w-full items-center justify-between">
+    <header className="relative mb-8 flex w-full items-center justify-between">
       <h1 className="text-2xl font-semibold">{title}</h1>
 
-      {action ? action : null}
+      <span className="absolute right-0 top-0">{action ? action : null}</span>
     </header>
   )
 }

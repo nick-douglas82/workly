@@ -33,7 +33,7 @@ export const SideNav = () => {
           list={[
             {
               name: 'Dashboard',
-              href: '/',
+              href: '/dashboard',
               icon: <PiSquaresFour className="mr-2 h-5 w-5" />,
               active: true,
             },

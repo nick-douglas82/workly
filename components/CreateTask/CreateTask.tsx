@@ -12,9 +12,15 @@ import { FiPlus } from 'react-icons/fi'
 import { useEventListener } from 'usehooks-ts'
 import { useAction } from '@/hooks/useAction'
 import { Button } from '@/components/ui/Button'
-import { SiteModal } from '@/components/SiteModal/SiteModal'
 import { FormTextarea } from '@/components/Form/FormTextarea'
 import { createTask } from '@/actions/createTask'
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/Dialog'
 
 type CreateTaskProp = {
   isSmall?: boolean
@@ -78,34 +84,39 @@ export const CreateTask = forwardRef<HTMLTextAreaElement, CreateTaskProp>(
           </button>
         )}
 
-        <SiteModal isActive={isActive} onClose={() => setIsActive(false)}>
-          <form
-            ref={formRef}
-            onSubmit={onSubmit}
-            className="flex flex-col space-y-6"
-          >
-            <FormTextarea
-              id="title"
-              onKeyDown={onTextareakeyDown}
-              ref={ref}
-              placeholder="Enter a title for this card..."
-              errors={fieldErrors}
-            />
-            <FormTextarea
-              id="description"
-              onKeyDown={onTextareakeyDown}
-              ref={ref}
-              placeholder="Enter a description..."
-              errors={fieldErrors}
-            />
-            <Button
-              icon={<FiPlus className="h-6 w-6" />}
-              text="Add Card"
-              type="submit"
-              className="mx-auto mt-12"
-            />
-          </form>
-        </SiteModal>
+        <Dialog open={isActive} onOpenChange={setIsActive}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Create Task</DialogTitle>
+              <form
+                ref={formRef}
+                onSubmit={onSubmit}
+                className="flex flex-col space-y-6"
+              >
+                <FormTextarea
+                  id="title"
+                  onKeyDown={onTextareakeyDown}
+                  ref={ref}
+                  placeholder="Enter a title for this card..."
+                  errors={fieldErrors}
+                />
+                <FormTextarea
+                  id="description"
+                  onKeyDown={onTextareakeyDown}
+                  ref={ref}
+                  placeholder="Enter a description..."
+                  errors={fieldErrors}
+                />
+                <Button
+                  icon={<FiPlus className="h-6 w-6" />}
+                  text="Add Card"
+                  type="submit"
+                  className="mx-auto mt-12"
+                />
+              </form>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
       </>
     )
   }
